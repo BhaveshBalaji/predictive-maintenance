@@ -22,7 +22,7 @@ def delivery_report(err, msg):
 
 def main():
     producer = Producer(get_producer_config())
-    simulator = Simulator(mode="normal")  # later: "drift"
+    simulator = Simulator(mode="gradual_drift")  # later: "drift"
 
     print("🚀 Starting sensor data producer...")
 
