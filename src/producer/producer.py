@@ -1,6 +1,7 @@
 # src/producer/producer.py
 from confluent_kafka import Producer, Consumer
-import json, time, sys, os, datetime
+import json, time, sys, os
+from datetime import datetime, timezone
 from threading import Thread
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -102,7 +103,7 @@ def main():
                 # Notify maintenance done
                 done_event = {
                     "event_id": "MAINTENANCE_DONE",
-                    "timestamp": datetime.datetime.utcnow().isoformat() + "Z",
+                    "timestamp": datetime.now(timezone.utc).isoformat(),
                     "machine_id": m,
                     "action": "MAINTENANCE_DONE",
                     "message": f"Maintenance completed for {m}. System restarting..."

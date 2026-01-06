@@ -78,3 +78,17 @@ Use the dashboard header to switch between:
 - **Normal**: Healthy baseline operation.
 - **Gradual Drift**: Slow increase in metrics leading to eventual failure.
 - **Sudden Fault**: Immediate spike in metrics for emergency shutdown testing.
+
+## 📸 System Demonstration
+
+### 🟢 1. Normal Operation
+Baseline behavior where all tools on the Fab floor are operating within normal parameters. Anomaly scores remain low, and the system status is healthy.
+![Normal Operation](images/NormalScenario.png)
+
+### 🟠 2. Gradual Drift & Automatic Maintenance
+In this scenario, `mach-04` experiences a gradual drift in its sensor telemetry. The Scoring Engine detects the increasing risk, and once it hits a critical threshold, the Action Engine automatically triggers a shutdown and schedules maintenance. The dashboard reflects the status as "Automatically Shutdown - Scheduled maintenance".
+![Gradual Drift](images/gradual_drift_maintenance.png)
+
+### 🔵 3. System Recovery
+After the simulated maintenance period (60 seconds), the tool's state is reset, its drift is cleared, and it resumes data emission. The status returns to "NORMAL", and the anomaly score drops back to the baseline.
+![System Recovery](images/Recovery.png)

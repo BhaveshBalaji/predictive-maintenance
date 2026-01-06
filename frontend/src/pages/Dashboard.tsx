@@ -117,7 +117,7 @@ export default function Dashboard() {
       </header>
 
       <main className="main-content">
-        <LineChart data={metrics} />
+        <LineChart data={metrics} machineId={selectedMachineId || ""} />
         <MachineTable
           machines={machines}
           onSelect={selectMachine}

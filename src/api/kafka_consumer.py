@@ -19,12 +19,29 @@ action_events = deque(maxlen=200)
 # Global producer for manual actions
 api_producer = None
 
+from datetime import datetime, timezone
+
 # =========================
 # Helpers
 # =========================
 
 def parse_ts(ts: str):
-    return datetime.fromisoformat(ts.replace("Z", "")) if ts else datetime.utcnow()
+    if not ts:
+        return datetime.now(timezone.utc)
+    
+    # fromisoformat handles +00:00 correctly. 
+    # If 'Z' is present, replace it with +00:00 only if an offset isn't already there.
+    # Actually, fromisoformat in newer Python handles 'Z' if it's there.
+    # Let's just make sure we don't double up on offsets.
+    normalized = ts.replace("Z", "+00:00")
+    if normalized.count("+00:00") > 1:
+        normalized = normalized.replace("+00:00+00:00", "+00:00")
+    
+    try:
+        return datetime.fromisoformat(normalized)
+    except ValueError:
+        # Fallback for older or weird strings
+        return datetime.now(timezone.utc)
 
 # =========================
 # Consumers
@@ -120,7 +137,7 @@ def produce_action(machine_id: str, action: str, message: str):
         
     event = {
         "event_id": "manual",
-        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "machine_id": machine_id,
         "action": action,
         "message": message

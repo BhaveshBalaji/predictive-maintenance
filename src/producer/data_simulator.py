@@ -1,7 +1,7 @@
 # src/producer/data_simulator.py
 import uuid
 import random
-import datetime
+from datetime import datetime, timezone
 
 class Simulator:
     def __init__(self, mode="normal"):
@@ -49,7 +49,7 @@ class Simulator:
         # Produce event
         return {
             "event_id": str(uuid.uuid4()),
-            "timestamp": datetime.datetime.utcnow().isoformat() + "Z",
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "machine_id": machine_id,
             "component_id": f"comp-{random.randint(1,20):03d}",
             "temperature_c": round(temp, 3),

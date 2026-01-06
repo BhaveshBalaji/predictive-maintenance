@@ -9,10 +9,10 @@ import {
 } from "recharts";
 import { MachineMetric } from "../types/models";
 
-export default function LineChart({ data }: { data: MachineMetric[] }) {
+export default function LineChart({ data, machineId }: { data: MachineMetric[], machineId: string }) {
   return (
     <div className="card" style={{ height: '400px' }}>
-      <h3>📈 Real-time Telemetry</h3>
+      <h3>📈 Real-time Telemetry {machineId && <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginLeft: '0.5rem' }}>// {machineId}</span>}</h3>
       <ResponsiveContainer width="100%" height="90%">
         <AreaChart data={data}>
           <defs>

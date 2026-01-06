@@ -91,12 +91,23 @@ body {
 }
 
 /* Table Styles */
+.table-container {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
 .machine-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
 .machine-table th {
+  position: sticky;
+  top: 0;
+  background: var(--bg-dark);
+  z-index: 10;
   text-align: left;
   padding: 0.75rem;
   color: var(--text-muted);

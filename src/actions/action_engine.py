@@ -69,7 +69,7 @@ def emit_action(producer, base_event, machine_id, action, message):
     """
     action_event = {
         "event_id": base_event.get("event_id", "system"),
-        "timestamp": datetime.now(timezone.utc).isoformat() + "Z",
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "machine_id": machine_id,
         "component_id": base_event.get("component_id"),
         "status": base_event.get("status"),
@@ -97,7 +97,7 @@ def emit_system_shutdown(producer):
 
     shutdown_event = {
         "event_id": "SYSTEM",
-        "timestamp": datetime.now(timezone.utc).isoformat() + "Z",
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "action": "SYSTEM_SHUTDOWN",
         "message": "All machines halted due to cascading failures"
     }
@@ -121,7 +121,7 @@ def main():
     # Emit startup alert
     startup_event = {
         "event_id": "SYSTEM_START",
-        "timestamp": datetime.now(timezone.utc).isoformat() + "Z",
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "machine_id": "SYSTEM",
         "action": "SYSTEM_ONLINE",
         "message": "Predictive Maintenance Action Engine is now monitoring assets."
