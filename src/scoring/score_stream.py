@@ -22,11 +22,16 @@ def score_event(event):
     instant_score = abs(temp - BASE_TEMP) / 10 + abs(vib - BASE_VIB) * 5
     machine_id = event["machine_id"]
 
+    if instant_score < 0.4:
+        instant_score = 0
+
     # 📈 Accumulate risk slowly
     machine_risk[machine_id] += instant_score * 0.3
 
     # 🧊 Natural recovery if healthy
     machine_risk[machine_id] *= 0.98
+
+    machine_risk[machine_id] = max(0, min(machine_risk[machine_id], 10))
 
     risk = machine_risk[machine_id]
 
@@ -56,6 +61,8 @@ def main():
                 continue
 
             event = json.loads(msg.value().decode("utf-8"))
+            
+            # get score, status, is_anomaly
             score, status, is_anomaly = score_event(event)
 
             event.update({
